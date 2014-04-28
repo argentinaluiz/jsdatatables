@@ -1,0 +1,32 @@
+{
+    "name": "argentinaluiz/jsdatatables",
+    "description": "Skeleton Application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2",
+        "datatables",
+        "doctrine"
+    ],
+    "authors": [
+        {
+            "name": "Luiz Carlos",
+            "email": "argentinaluiz@gmail.com",
+            "homepage": "https://github.com/argentinaluiz"
+        }
+    ],
+    "homepage": "https://github.com/argentinaluiz/jsdatatables.git",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+        "argentinaluiz/js_zf2_library": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "JSDataTables": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
