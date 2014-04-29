@@ -21,6 +21,7 @@ class DtConfig extends AbstractHelper {
         unset($dtConfig['type_query']);
         unset($dtConfig['primary_key']);
         unset($dtConfig['class_name']);
+        unset($dtConfig['class_dt']);
         unset($dtConfig['alias_default']);
         return $dtConfig;
     }
