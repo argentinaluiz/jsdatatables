@@ -25,6 +25,11 @@ class ConfigDt {
     private $className;
 
     /**
+     * @var string
+     */
+    private $classDt;
+
+    /**
      * @var \ArrayObject
      */
     private $columns;
@@ -94,6 +99,22 @@ class ConfigDt {
     }
 
     /**
+     * @return string
+     */
+    public function getClassDt() {
+        return $this->classDt;
+    }
+
+    /**
+     * @param string $classDt
+     * @return ConfigDt
+     */
+    public function setClassDt($classDt) {
+        $this->classDt = $classDt;
+        return $this;
+    }
+
+    /**
      * @return \ArrayObject
      */
     public function getColumns() {
@@ -136,7 +157,8 @@ class ConfigDt {
                         ->setPrimaryKey($data['primary_key'])
                         ->setColumns($columns)
                         ->setAliasDefault($data['alias_default'])
-                        ->setClassName($data['class_name']);
+                        ->setClassName($data['class_name'])
+                        ->setClassDt(isset($data['class_dt']) ? $data['class_dt'] : null);
     }
 
 }
