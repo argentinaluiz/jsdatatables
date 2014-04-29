@@ -23,6 +23,8 @@ class DtConfig extends AbstractHelper {
         unset($dtConfig['class_name']);
         unset($dtConfig['class_dt']);
         unset($dtConfig['alias_default']);
+        unset($dtConfig['is_service']);
+        unset($dtConfig['service_name']);
         return $dtConfig;
     }
 

@@ -21,11 +21,12 @@ class JSDataTablesManager implements ServiceLocatorAwareInterface {
     public function getDt($name) {
         $dataTablesConfig = $this->getConfig()['js_datatables'];
         if (array_key_exists($name, $dataTablesConfig)) {
-            if (isset($dataTablesConfig[$name]['is_service'])) {
-                return $this->getServiceLocator()->get($dataTablesConfig[$name]['service_name']);
+            $dtConfig = $this->getDtConfig($name);
+            if (isset($dtConfig['is_service'])) {
+                return $this->getServiceLocator()->get($dtConfig['service_name']);
             } else {
-                if (isset($dataTablesConfig[$name]['class_dt'])) {
-                    $instance = new $dataTablesConfig[$name]['class_dt'];
+                if (isset($dtConfig['class_dt'])) {
+                    $instance = new $dtConfig['class_dt'];
                     return $this->injectDependencies($instance, $this->getDtConfig($name));
                 } else {
                     return $this->injectDependencies(new JSDataTables(), $this->getDtConfig($name));
