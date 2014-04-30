@@ -48,7 +48,7 @@ class JSDataTables {
             $this->getAjaxData()->hydrate($data);
             $this->getDtConfig()->hydrate($this->dtArrayConfig);
             $this->query = $this->getEntityManager()->createQueryBuilder();
-            $this->listClause->createList($this->getDtConfig(), $this->getAjaxData());
+            $this->createClauseWhere();
         } else {
             throw new \InvalidArgumentException("Não foi possível identificar os parametros da consulta");
         }
@@ -93,6 +93,10 @@ class JSDataTables {
 
     protected function join($query) {
 
+    }
+
+    protected function createClauseWhere() {
+        $this->listClause->createList($this->getDtConfig(), $this->getAjaxData());
     }
 
     protected function where($query) {
