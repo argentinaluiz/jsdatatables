@@ -27,19 +27,19 @@ class JSDataTables {
     /**
      * @var \JSDataTables\Entity\AjaxParams
      */
-    private $ajaxData;
+    protected $ajaxData;
 
     /**
      * @var QueryBuilder or string
      */
-    private $query;
+    protected $query;
 
     /**
      * @var \JSDataTables\Service\ListClause
      */
-    private $listClause;
-    private $inputFilter;
-    private $params;
+    protected $listClause;
+    protected $inputFilter;
+    protected $params;
 
     private function prepareParams() {
         $this->getInputFilter()->setData($this->params);
