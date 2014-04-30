@@ -137,7 +137,7 @@ class JSDataTables {
         $this->from($query);
         $this->join($query);
         if ($this->getDtConfig()->getTypeQuery() != 'doctrine') {
-            return $this->getEntityManager()->getConnection()->prepare($query->getDQL());
+            $query = $this->getEntityManager()->getConnection()->prepare($query->getDQL());
         }
         $countTotal = $this->execute($query);
         return intval($countTotal[0][key($countTotal[0])]);
@@ -151,7 +151,12 @@ class JSDataTables {
         $this->join($query);
         $this->where($query);
         if ($this->getDtConfig()->getTypeQuery() != 'doctrine') {
-            return $this->getEntityManager()->getConnection()->prepare($query->getDQL());
+            $statement = $this->getEntityManager()->getConnection()->prepare($query->getDQL());
+            $parameters = $query->getParameters()->toArray();
+            foreach ($parameters as $param) {
+                $statement->bindValue($param->getName(), $param->getValue(), $param->getType());
+            }
+            $query = $statement;
         }
         $countFiltered = $this->execute($query);
         return intval($countFiltered[0][key($countFiltered[0])]);
