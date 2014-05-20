@@ -28,17 +28,27 @@ class ListClause {
     }
 
     private function getValueFiltered($filters, $value) {
-        return '%' . $this->getFilterManager()->filter($filters, $value) . '%';
+        return $this->getFilterManager()->filter($filters, $value);
     }
 
     private function createClause($alias, $name, $filters, $value, $searchValue, $separator) {
         if (!$separator) {
-            $value = $this->getValueFiltered($filters, $value);
-            $clause = new Expr\Comparison("$alias.$name", 'LIKE', ":$name");
+            $value = '%' . $this->getValueFiltered($filters, $value) . '%';
+            $clause = new Expr\Orx();
+            $clause->add(new Expr\Comparison("$alias.$name", 'LIKE', ":$name"));
+            $clause->add(new Expr\Andx([
+                new Expr\Comparison("$alias.$name", 'IS', "NULL"),
+                new Expr\Comparison(":$name", '=', "'%%'")
+            ]));
             $this->addClause($name, 'indv', $clause, new Parameter($name, $value));
         }
-        $value = $this->getValueFiltered($filters, $searchValue);
-        $clause = new Expr\Comparison("$alias.$name", 'LIKE', ":search_$name");
+        $value = '%' . $this->getValueFiltered($filters, $searchValue) . '%';
+        $clause = new Expr\Orx();
+        $clause->add(new Expr\Comparison("$alias.$name", 'LIKE', ":search_$name"));
+        $clause->add(new Expr\Andx([
+            new Expr\Comparison("$alias.$name", 'IS', "NULL"),
+            new Expr\Comparison(":search_$name", '=', "'%%'")
+        ]));
         $this->addClause($name, 'search', $clause, new Parameter("search_$name", $value));
     }
 
